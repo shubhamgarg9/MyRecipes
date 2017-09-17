@@ -1,0 +1,19 @@
+<p>
+	<h1><%= @recipe.name %></h1>
+</p>
+<div class="row">
+	<div class = "col-md-4 pull-right center">
+		<%= gravatar_for @recipe.chef, size: 200 %>
+		<p>
+			<h5>Brought to you by: <%= @recipe.chef.chefname %></h5>
+		</p>
+	</div>
+	<div class="col-md-8">
+		<h3><%=@recipe.text %></h3>
+		<div class="well">
+			<p><%= @recipe.description %></p>
+		</div>
+	</div>
+</div>
+
+<h5><%= link_to "return to recipes listing", recipes_path, class: "btn btn-warning btn-scroll" %></h5>
