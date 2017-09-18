@@ -9,9 +9,10 @@
 		</p>
 	</div>
 	<div class="col-md-8">
+		<%= link_to "edit recipe", edit_recipe_path(@recipe), class: "btn btn-success pull-right" %>
 		<h3><%=@recipe.text %></h3>
 		<div class="well">
-			<p><%= @recipe.description %></p>
+			<p><%= simple_format(@recipe.description) %></p>
 		</div>
 	</div>
 </div>
