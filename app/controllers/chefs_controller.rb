@@ -11,15 +11,21 @@ class ChefsController < ApplicationController
 			redirect_to recipes_path 
 		else
 			render 'new'
-		end
+		end 
 	end
 
 	def edit
-
+		@chef = Chef.find(params[:id])
 	end
 
 	def update
-
+		@chef = Chef.find(params[:id])
+		if @chef.update(chef_params)
+			flash[:success] = "update successful"
+			redirect_to recipes_path # TODO change to show chef page
+		else
+			render :edit
+		end
 	end
 
 	private
