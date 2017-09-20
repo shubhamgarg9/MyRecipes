@@ -9,13 +9,17 @@ class RecipesController < ApplicationController
 	end
 
 	def new
-		@recipe = Recipe.new
+		if logged_in?
+			@recipe = Recipe.new
+		else
+			flash[:danger] = "you must be logged in"
+			redirect_to '/login'			
+		end
 	end
 
 	def create
 		@recipe = Recipe.new(recipe_params)
-		@recipe.chef = Chef.find(2)
-
+		@recipe.chef = current_user
 		if @recipe.save
 			flash[:success] = "your recipe was created successfully"
 			redirect_to recipes_path
@@ -25,7 +29,11 @@ class RecipesController < ApplicationController
 	end
 
 	def edit
-		@recipe = Recipe.find(params[:id])
+		if logged_in? & (current_user == Recipe.find(params[:id]).chef)
+			@recipe = Recipe.find(params[:id])
+		else
+			redirect_to recipes_path
+		end
 	end
 
 	def update
@@ -40,13 +48,18 @@ class RecipesController < ApplicationController
 
 	def like
 		@recipe = Recipe.find(params[:id])
-		like = Like.create(like: params[:like], chef: Chef.first, recipe: @recipe)
-		if like.valid?
-			flash[:success] = "your selection was successful"
-			redirect_to :back
+		if logged_in?
+			like = Like.create(like: params[:like], chef: Chef.first, recipe: @recipe)
+			if like.valid?
+				flash[:success] = "your selection was successful"
+				redirect_to :back
+			else
+				flash[:danger] = "you can only like/dislike once"
+				redirect_to :back
+			end
 		else
-			flash[:danger] = "you can only like/dislike once"
-			redirect_to :back
+			flash[:danger] = "you must be logged in"
+			redirect_to login_path
 		end
 	end
 
