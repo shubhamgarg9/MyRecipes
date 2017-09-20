@@ -14,4 +14,9 @@ Rails.application.routes.draw do
 
   get '/register', to: 'chefs#new'
 
+
+  get '/login' => 'logins#new'
+  post '/login' => 'logins#create'
+  get '/logout' => 'logins#destroy'
+
 end
