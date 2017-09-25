@@ -9,7 +9,7 @@ class RecipesController < ApplicationController
 	end
 
 	def show
-
+		@chef = @recipe.chef
 	end
 
 	def new
@@ -76,6 +76,7 @@ class RecipesController < ApplicationController
 		end
 
 		def require_same_user
+			@chef = Recipe.find(params[:id]).chef
 			if current_user != @chef
 				flash[:danger] = "you can only edit only your profile"
 				redirect_to root_path
