@@ -1,4 +1,4 @@
-<%= render 'shared/page_title', title: 'All Recipes' %>
+<%= render 'shared/page_title', title: "recipes for:" + @style.name %>
 <ul class="nav nav-tabs">
 	<li class="active">
 		<%= link_to "recipes", recipes_path
@@ -8,7 +8,7 @@
  	</li>
 </ul>
 
-<% @recipes.each do |recipe| %>
+<% @style.recipes.each do |recipe| %>
 	<div class="row">
 		<div class="col-md-2">
 			<section class="chef_info_center">
@@ -54,4 +54,4 @@
 	<hr/>
 <% end %>
 
-<%= will_paginate %>
+<%= will_paginate @recipes %>
